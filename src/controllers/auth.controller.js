@@ -79,4 +79,20 @@ async function loginUser(req, res) {
   });
 }
 
-module.exports = { registerUser, getUser, loginUser };
+async function deleteUser(req, res) {
+  const { id } = req.params;
+
+  const del = await userModel.deleteOne({ _id: id });
+
+  if (!del.deletedCount >= 1) {
+    return res.status(200).json({
+      message: "User not found",
+    });
+  }
+
+  return res.status(200).json({
+    message: "Deleted successfully",
+  });
+}
+
+module.exports = { registerUser, getUser, loginUser, deleteUser };
