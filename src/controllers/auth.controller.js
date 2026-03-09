@@ -5,6 +5,12 @@ const bcrypt = require("bcryptjs");
 async function registerUser(req, res) {
   const { userName, email, password } = req.body;
 
+  if (!userName || !email || !password) {
+    return res.status(404).json({
+      message: "all feilds are compolsory",
+    });
+  }
+
   const isUserExist = await userModel.findOne({ email });
 
   if (isUserExist) {
